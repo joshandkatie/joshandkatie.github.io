@@ -13,6 +13,26 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<script>
+
+			function numberWithCommas(x) {
+			    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+
+			// Page Load
+			const subscriberCountUrl = "https://www.googleapis.com/youtube/v3/channels?part=statistics&fields=items/statistics/subscriberCount&id=UCHzWIPEh3In0jdBPp9hgGOg&key=AIzaSyDNJMuAJYhw-vBbw6jl6-wWrPwbdXSeYng";
+			document.addEventListener("DOMContentLoaded", function(){
+				fetch(subscriberCountUrl)
+					.then(res => res.json())
+					.then(data => {
+						let subscriberCount = data.items[0].statistics.subscriberCount;
+						subscriberCount = numberWithCommas(subscriberCount);
+						console.log(subscriberCount);
+						document.querySelector('#sub-count').innerText = subscriberCount;
+					});
+			});
+		</script>
 	</head>
 	<body class="is-preload">
 
@@ -21,7 +41,7 @@
 				<div class="content">
 					<h1><a href="#">Josh and Katie</a></h1>
 					<p>Youtube Content Creators<br />
-						17,000 Subscribers
+						<span id="sub-count">17,000</span> Subscribers
 					</p>
 					<ul class="actions">
 						<li><a href="https://www.youtube.com/channel/UCHzWIPEh3In0jdBPp9hgGOg" class="button primary icon solid brands fa-youtube" target="_blank">Watch on YouTube</a></li>
